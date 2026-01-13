@@ -45,3 +45,16 @@ router.put('/:id', async(req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// DELETE a book
+router.delete('/:id', async(req, res) => {
+    try {
+        const deletedBook = await Book.findByIdAndDelete(req.params.id);
+        if(!deletedBook) return res.status(404).json({ error: 'Book not found' });
+        res.json({ message: 'Book deleted successfully' });
+    } catch(err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+module.exports = router
